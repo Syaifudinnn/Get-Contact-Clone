@@ -1,0 +1,33 @@
+created:
+    - database/factories/ClientFactory.php
+    - database/factories/ContactFactory.php
+    - database/factories/TagFactory.php
+    - database/factories/SpamReportFactory.php
+    - database/factories/SearchHistoryFactory.php
+    - database/factories/SettingFactory.php
+    - database/migrations/2024_12_28_182528_create_clients_table.php
+    - database/migrations/2024_12_28_182529_create_contacts_table.php
+    - database/migrations/2024_12_28_182530_create_tags_table.php
+    - database/migrations/2024_12_28_182531_create_spam_reports_table.php
+    - database/migrations/2024_12_28_182532_create_search_histories_table.php
+    - database/migrations/2024_12_28_182533_create_settings_table.php
+    - app/Models/Client.php
+    - app/Models/Contact.php
+    - app/Models/Tag.php
+    - app/Models/SpamReport.php
+    - app/Models/SearchHistory.php
+    - app/Models/Setting.php
+    - database/seeders/ClientSeeder.php
+    - database/seeders/ContactSeeder.php
+    - database/seeders/TagSeeder.php
+    - database/seeders/SpamReportSeeder.php
+    - database/seeders/SearchHistorySeeder.php
+    - database/seeders/SettingSeeder.php
+models:
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable' }
+    Client: { name: 'string:200', email: 'string:200:unique', phone_number: 'string:32:unique', password: string, relationships: { hasMany: 'Contact SearchHistory SpamReport Tag', hasOne: Setting } }
+    Contact: { contact_name: 'string:200', contact_phone: 'string:32', relationships: { belongsTo: Client } }
+    Tag: { phone_number: 'string:32', tag: 'string:200', relationships: { belongsTo: Client } }
+    SpamReport: { phone_number: 'string:32', reason: text, relationships: { belongsTo: Client } }
+    SearchHistory: { phone_number: 'string:32', searched_at: timestamp, relationships: { belongsTo: Client } }
+    Setting: { spam_protection_enabled: boolean, tag_visibility: 'enum:public,private', relationships: { belongsTo: Client } }

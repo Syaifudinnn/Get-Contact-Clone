@@ -1,0 +1,36 @@
+models:
+  Client:
+    name: string:200
+    email: string:200:unique
+    phone_number: string:32:unique
+    password: string
+    relationships:
+      hasMany:
+        - Contact
+        - SearchHistory
+        - SpamReport
+        - Tag
+      hasOne: Setting
+  Contact:
+    contact_name: string:200
+    contact_phone: string:32
+    tag: 
+    relationships:
+      belongsTo: Client
+  SpamReport:
+    phone_number: string:32
+    reason: text
+    relationships:
+      belongsTo: Client
+  SearchHistory:
+    phone_number: string:32
+    searched_at: timestamp
+    relationships:
+      belongsTo: Client
+  Setting:
+    spam_protection_enabled: boolean
+    tag_visibility: enum:public,private
+    relationships:
+      belongsTo: Client
+
+seeders: Client, Contact, Tag, SpamReport, SearchHistory, Setting
