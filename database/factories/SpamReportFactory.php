@@ -22,9 +22,7 @@ class SpamReportFactory extends Factory
     public function definition(): array
     {
         return [
-            'phone_number' => $this->faker->phoneNumber(),
-            'reason' => $this->faker->text(),
-            'client_id' => Client::factory(),
+
         ];
     }
 }

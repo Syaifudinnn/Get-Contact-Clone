@@ -22,9 +22,7 @@ class SearchHistoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'phone_number' => $this->faker->phoneNumber(),
-            'searched_at' => $this->faker->dateTime(),
-            'client_id' => Client::factory(),
+
         ];
     }
 }

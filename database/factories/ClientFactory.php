@@ -21,10 +21,7 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->safeEmail(),
-            'phone_number' => $this->faker->phoneNumber(),
-            'password' => bcrypt($this->faker->password()),
+            
         ];
     }
 }

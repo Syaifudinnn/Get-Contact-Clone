@@ -7,10 +7,12 @@ use App\Filament\Resources\SpamReportResource\RelationManagers;
 use App\Models\SpamReport;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -60,7 +62,23 @@ class SpamReportResource extends Resource
                     ->wrap(),
             ])
             ->filters([
-                //
+                Filter::make('phone_number')
+                    ->query(function ($query, $data) {
+                        $phone = $data['search'];
+
+                        // Normalisasi input untuk pencarian
+                        if (str_starts_with($phone, '08')) {
+                            $phone = '+62' . substr($phone, 1);
+                        }
+
+                        return $query->where('phone_number', 'LIKE', $phone . '%');
+                    })
+                    ->form([
+                        TextInput::make('search')
+                            ->label('Phone Number')
+                            ->placeholder('Enter phone number (08 or +62)')
+                            ->required(),
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

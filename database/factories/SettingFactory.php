@@ -22,9 +22,7 @@ class SettingFactory extends Factory
     public function definition(): array
     {
         return [
-            'spam_protection_enabled' => false,
-            'tag_visibility' => 'public',
-            'client_id' => Client::factory(),
+
         ];
     }
 }

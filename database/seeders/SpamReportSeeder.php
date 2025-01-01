@@ -12,6 +12,6 @@ class SpamReportSeeder extends Seeder
      */
     public function run(): void
     {
-        SpamReport::factory()->count(10)->create();
+
     }
 }

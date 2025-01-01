@@ -12,6 +12,6 @@ class SearchHistorySeeder extends Seeder
      */
     public function run(): void
     {
-        SearchHistory::factory()->count(10)->create();
+
     }
 }

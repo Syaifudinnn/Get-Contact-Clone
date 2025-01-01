@@ -22,10 +22,7 @@ class ContactFactory extends Factory
     public function definition(): array
     {
         return [
-            'contact_name' => $this->faker->name(),
-            'contact_phone' => $this->faker->phoneNumber(),
-            'tag' => $this->faker->randomElement(["family","friend", "work"]),
-            'client_id' => Client::factory(),
+
         ];
     }
 }
