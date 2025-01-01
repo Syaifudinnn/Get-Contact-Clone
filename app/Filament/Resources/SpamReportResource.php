@@ -57,7 +57,8 @@ class SpamReportResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('client.name')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('reason')
                     ->wrap(),
             ])

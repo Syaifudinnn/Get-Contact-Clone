@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ClientResource\Pages;
 use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
+use App\Models\Setting;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
@@ -131,12 +132,20 @@ class ClientResource extends Resource
         ];
     }
 
-    public static function getGlobalSearchAttributes(): array
+    /**
+     * Menambahkan pengaturan default saat client baru dibuat.
+     *
+     * @param Client $client
+     * @return void
+     */
+    
+    public static function created(Client $client)
     {
-        return [
-            'name',
-            'email',
-            'phone_number',
-        ];
+        // Menambahkan setting default untuk client baru
+        Setting::create([
+            'client_id' => $client->id,
+            'spam_protection_enabled' => false, // Default nilai untuk pengaturan
+            'tag_visibility' => 'public', // Default nilai untuk pengaturan
+        ]);
     }
 }

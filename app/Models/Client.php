@@ -109,4 +109,18 @@ class Client extends Model
     {
         $this->attributes['phone_number'] = self::normalizePhoneNumber($value);
     }
+
+    protected static function booted()
+    {
+        static::saved(function ($client) {
+            // Cek jika setting untuk client belum ada
+            if (!$client->setting) {
+                Setting::create([
+                    'client_id' => $client->id,
+                    'spam_protection_enabled' => false,  // Nilai default
+                    'tag_visibility' => 'public',      // Nilai default
+                ]);
+            }
+        });
+    }
 }
