@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->boolean('spam_protection_enabled');
             $table->enum('tag_visibility', ["public","private"]);
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

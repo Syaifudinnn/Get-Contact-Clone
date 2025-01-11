@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Contact extends Model
 {
@@ -18,7 +19,6 @@ class Contact extends Model
     protected $fillable = [
         'contact_name',
         'contact_phone',
-        'tag',
         'client_id',
     ];
 
@@ -40,6 +40,16 @@ class Contact extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
+    }
+
+    /**
+     * Relationship with SpamReport model.
+     *
+     * @return HasMany
+     */
+    public function spamReports(): HasMany
+    {
+        return $this->hasMany(SpamReport::class);
     }
 
     /**

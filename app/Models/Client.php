@@ -50,6 +50,14 @@ class Client extends Model
     }
 
     /**
+     * Relasi hasMany untuk Tag.
+     */
+    public function tags()
+    {
+        return $this->hasMany(Contact::class);
+    }
+
+    /**
      * Relasi hasMany untuk SearchHistory.
      */
     public function searchHistories()
@@ -117,8 +125,8 @@ class Client extends Model
             if (!$client->setting) {
                 Setting::create([
                     'client_id' => $client->id,
-                    'spam_protection_enabled' => false,  // Nilai default
-                    'tag_visibility' => 'public',      // Nilai default
+                    'spam_protection_enabled' => false,
+                    'tag_visibility' => 'public',
                 ]);
             }
         });

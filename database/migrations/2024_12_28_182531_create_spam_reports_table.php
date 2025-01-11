@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('spam_reports', function (Blueprint $table) {
             $table->id();
-            $table->string('phone_number', 32);
             $table->text('reason');
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
+            $table->foreignId('contact_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

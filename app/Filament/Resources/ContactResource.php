@@ -38,13 +38,6 @@ class ContactResource extends Resource
                         Forms\Components\TextInput::make('contact_phone')
                             ->required()
                             ->maxLength(32),
-                        Forms\Components\Select::make('tag')
-                            ->options([
-                                'family' => 'Family',
-                                'friend' => 'Friend',
-                                'work' => 'Work',
-                            ])
-                            ->required(),
                     ]),
                 Section::make('Client Information')
                     ->columns(2)
@@ -66,14 +59,6 @@ class ContactResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('contact_phone')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('tag')
-                    ->searchable()
-                    ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                        'friend' => 'info',
-                        'family' => 'success',
-                        'work' => 'warning',
-                    }),
                 Tables\Columns\TextColumn::make('client.name')
                     ->numeric()
                     ->sortable(),
@@ -83,7 +68,6 @@ class ContactResource extends Resource
                     ->query(function ($query, $data) {
                         $phone = $data['search'];
 
-                        // Normalisasi input untuk pencarian
                         if (str_starts_with($phone, '08')) {
                             $phone = '+62' . substr($phone, 1);
                         }

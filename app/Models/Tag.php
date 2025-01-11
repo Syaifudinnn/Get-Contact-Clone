@@ -6,23 +6,37 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class SpamReport extends Model
+class Tag extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'reason',
+        'tag',
         'client_id',
         'contact_id'
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
     protected $casts = [
         'id' => 'integer',
         'client_id' => 'integer',
         'contact_id' => 'integer',
     ];
 
-    //relasi
+    /**
+     * Relationship with Client model.
+     *
+     * @return BelongsTo
+     */
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
@@ -39,7 +53,7 @@ class SpamReport extends Model
     }
 
     /**
-     * Normalize phone number before saving.
+     * Normalize phone number before saving to database.
      *
      * @param string $phone
      * @return string
@@ -53,9 +67,10 @@ class SpamReport extends Model
     }
 
     /**
-     * Set the phone_number attribute with normalization.
+     * Set the contact phone attribute.
      *
      * @param string $value
+     * @return void
      */
     public function setPhoneNumberAttribute($value)
     {
@@ -63,15 +78,30 @@ class SpamReport extends Model
     }
 
     /**
-     * Scope to find spam reports by phone number.
+     * Validate if the tag already exists for the same client and phone number.
+     *
+     * @param string $phoneNumber
+     * @param string $tag
+     * @param int $clientId
+     * @return bool
+     */
+    public static function isDuplicate($phoneNumber, $tag, $clientId): bool
+    {
+        return self::where('phone_number', $phoneNumber)
+            ->where('tag', $tag)
+            ->where('client_id', $clientId)
+            ->exists();
+    }
+
+    /**
+     * Scope to find tags by phone number.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $phone
+     * @param string $phoneNumber
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFindByPhoneNumber($query, $phone)
+    public function scopeFindByPhoneNumber($query, $phoneNumber)
     {
-        $normalizedPhone = self::normalizePhoneNumber($phone);
-        return $query->where('phone_number', $normalizedPhone);
+        return $query->where('phone_number', $phoneNumber);
     }
 }
