@@ -9,7 +9,7 @@ use App\Filament\Resources\ClientResource;
 class PaginationHandler extends Handlers {
     public static string | null $uri = '/';
     public static string | null $resource = ClientResource::class;
-    public static bool $public = true;
+    // public static bool $public = true;
 
     public function handler()
     {
