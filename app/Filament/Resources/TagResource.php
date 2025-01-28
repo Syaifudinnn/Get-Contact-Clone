@@ -41,8 +41,8 @@ class TagResource extends Resource
                         Forms\Components\TextInput::make('tag')
                             ->required()
                             ->maxLength(32),
-                        Forms\Components\Select::make('client_id')
-                            ->relationship('client', 'name')
+                        Forms\Components\Select::make('user_id')
+                            ->relationship('user', 'name')
                             ->required(),
                     ]),
             ]);
@@ -60,7 +60,7 @@ class TagResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tag')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('client.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable()
                     ->searchable(),

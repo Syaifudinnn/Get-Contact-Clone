@@ -1,17 +1,17 @@
 <?php
-namespace App\Filament\Resources\ClientResource\Api\Handlers;
+namespace App\Filament\Resources\UserResource\Api\Handlers;
 
 use Illuminate\Http\Request;
 use Rupadana\ApiService\Http\Handlers;
-use App\Filament\Resources\ClientResource;
+use App\Filament\Resources\UserResource;
 
-class DeleteHandler extends Handlers {
+class UpdateHandler extends Handlers {
     public static string | null $uri = '/{id}';
-    public static string | null $resource = ClientResource::class;
+    public static string | null $resource = UserResource::class;
 
     public static function getMethod()
     {
-        return Handlers::DELETE;
+        return Handlers::PUT;
     }
 
     public static function getModel() {
@@ -26,8 +26,10 @@ class DeleteHandler extends Handlers {
 
         if (!$model) return static::sendNotFoundResponse();
 
-        $model->delete();
+        $model->fill($request->all());
 
-        return static::sendSuccessResponse($model, "Successfully Delete Resource");
+        $model->save();
+
+        return static::sendSuccessResponse($model, "Successfully Update Resource");
     }
 }

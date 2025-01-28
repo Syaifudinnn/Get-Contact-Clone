@@ -12,20 +12,20 @@ class SpamReport extends Model
 
     protected $fillable = [
         'reason',
-        'client_id',
+        'user_id',
         'contact_id'
     ];
 
     protected $casts = [
         'id' => 'integer',
-        'client_id' => 'integer',
+        'user_id' => 'integer',
         'contact_id' => 'integer',
     ];
 
     //relasi
-    public function client(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(User::class);
     }
 
     /**

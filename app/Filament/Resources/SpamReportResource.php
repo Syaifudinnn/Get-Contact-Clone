@@ -45,8 +45,8 @@ class SpamReportResource extends Resource
                 Section::make('Reporter Infromation')
                     ->columns(2)
                     ->schema([
-                        Forms\Components\Select::make('client_id')
-                            ->relationship('client', 'name')
+                        Forms\Components\Select::make('user_id')
+                            ->relationship('user', 'name')
                             ->required(),
                     ]),
             ]);
@@ -64,7 +64,7 @@ class SpamReportResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('reason')
                     ->wrap(),
-                Tables\Columns\TextColumn::make('client.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable()
                     ->searchable(),

@@ -18,7 +18,7 @@ class Setting extends Model
     protected $fillable = [
         'spam_protection_enabled',
         'tag_visibility',
-        'client_id',
+        'user_id',
     ];
 
     /**
@@ -29,11 +29,11 @@ class Setting extends Model
     protected $casts = [
         'id' => 'integer',
         'spam_protection_enabled' => 'boolean',
-        'client_id' => 'integer',
+        'user_id' => 'integer',
     ];
 
-    public function client(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(User::class);
     }
 }

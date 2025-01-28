@@ -32,8 +32,8 @@ class SearchHistoryResource extends Resource
                     ->maxLength(32),
                 Forms\Components\DateTimePicker::make('searched_at')
                     ->required(),
-                Forms\Components\Select::make('client_id')
-                    ->relationship('client', 'name')
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
                     ->required(),
             ]);
     }
@@ -47,7 +47,7 @@ class SearchHistoryResource extends Resource
                 Tables\Columns\TextColumn::make('searched_at')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('client.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
             ])

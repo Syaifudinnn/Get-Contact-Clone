@@ -46,7 +46,7 @@ class SettingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('client.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tag_visibility'),

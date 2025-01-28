@@ -1,15 +1,15 @@
 <?php
-namespace App\Filament\Resources\ClientResource\Api\Handlers;
+namespace App\Filament\Resources\UserResource\Api\Handlers;
 
 use Illuminate\Http\Request;
 use Rupadana\ApiService\Http\Handlers;
 use Spatie\QueryBuilder\QueryBuilder;
-use App\Filament\Resources\ClientResource;
+use App\Filament\Resources\UserResource;
 
 class PaginationHandler extends Handlers {
     public static string | null $uri = '/';
-    public static string | null $resource = ClientResource::class;
-    // public static bool $public = true;
+    public static string | null $resource = UserResource::class;
+
 
     public function handler()
     {

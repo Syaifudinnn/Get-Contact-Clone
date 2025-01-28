@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('phone_number', 32);
             $table->timestamp('searched_at');
-            $table->foreignId('client_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

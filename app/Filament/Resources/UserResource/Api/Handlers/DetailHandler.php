@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\ClientResource\Api\Handlers;
+namespace App\Filament\Resources\UserResource\Api\Handlers;
 
 use App\Filament\Resources\SettingResource;
-use App\Filament\Resources\ClientResource;
+use App\Filament\Resources\UserResource;
 use Rupadana\ApiService\Http\Handlers;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class DetailHandler extends Handlers
 {
     public static string | null $uri = '/{id}';
-    public static string | null $resource = ClientResource::class;
+    public static string | null $resource = UserResource::class;
 
 
     public function handler(Request $request)

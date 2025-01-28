@@ -17,12 +17,12 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Admin',
+            'phone_number' => '08123456789',
             'email' => 'admin@admin.com',
         ]);
 
         //call all seeder
         $this->call([
-            ClientSeeder::class,
             ContactSeeder::class,
             SearchHistorySeeder::class,
             SpamReportSeeder::class,

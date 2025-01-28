@@ -42,10 +42,10 @@ class ContactResource extends Resource
                 Section::make('Client Information')
                     ->columns(2)
                     ->schema([
-                        Forms\Components\Select::make('client_id')
+                        Forms\Components\Select::make('user_id')
                             ->searchable()
                             ->preload()
-                            ->relationship('client', 'name')
+                            ->relationship('user', 'name')
                             ->required(),
                     ]),
             ]);
@@ -59,7 +59,7 @@ class ContactResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('contact_phone')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('client.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
             ])

@@ -17,7 +17,7 @@ class Tag extends Model
      */
     protected $fillable = [
         'tag',
-        'client_id',
+        'user_id',
         'contact_id'
     ];
 
@@ -28,7 +28,7 @@ class Tag extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'client_id' => 'integer',
+        'user_id' => 'integer',
         'contact_id' => 'integer',
     ];
 
@@ -37,9 +37,9 @@ class Tag extends Model
      *
      * @return BelongsTo
      */
-    public function client(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -82,14 +82,14 @@ class Tag extends Model
      *
      * @param string $phoneNumber
      * @param string $tag
-     * @param int $clientId
+     * @param int $user_id
      * @return bool
      */
-    public static function isDuplicate($phoneNumber, $tag, $clientId): bool
+    public static function isDuplicate($phoneNumber, $tag, $userId): bool
     {
         return self::where('phone_number', $phoneNumber)
             ->where('tag', $tag)
-            ->where('client_id', $clientId)
+            ->where('user_id', $userId)
             ->exists();
     }
 

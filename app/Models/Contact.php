@@ -19,7 +19,7 @@ class Contact extends Model
     protected $fillable = [
         'contact_name',
         'contact_phone',
-        'client_id',
+        'user_id',
     ];
 
     /**
@@ -29,7 +29,7 @@ class Contact extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'client_id' => 'integer',
+        'user_id' => 'integer',
     ];
 
     /**
@@ -37,9 +37,9 @@ class Contact extends Model
      *
      * @return BelongsTo
      */
-    public function client(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -81,14 +81,14 @@ class Contact extends Model
      * Validate if the phone number already exists for the same client.
      *
      * @param string $phone
-     * @param int $clientId
+     * @param int $userId
      * @return bool
      */
-    public static function isDuplicate($phone, $clientId): bool
+    public static function isDuplicate($phone, $userId): bool
     {
         $normalizedPhone = self::normalizePhoneNumber($phone);
         return self::where('contact_phone', $normalizedPhone)
-            ->where('client_id', $clientId)
+            ->where('user_id', $userId)
             ->exists();
     }
 

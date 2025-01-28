@@ -13,18 +13,18 @@ class SearchHistory extends Model
     protected $fillable = [
         'phone_number',
         'searched_at',
-        'client_id',
+        'user_id',
     ];
 
     protected $casts = [
         'id' => 'integer',
         'searched_at' => 'timestamp',
-        'client_id' => 'integer',
+        'user_id' => 'integer',
     ];
 
-    public function client(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
