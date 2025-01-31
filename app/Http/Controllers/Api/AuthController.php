@@ -16,19 +16,19 @@ class AuthController extends Controller
     {
         //validate dengan Auth::attempt
         if (Auth::attempt($request->only('email', 'password'))) {
-            //jika berhasil buat token
+
             $user = User::where('email', $request->email)->first();
-            //token lama dihapus
+
             $user->tokens()->delete();
-            //token baru di create
+
             $abilities = $user->getAllPermissions()->pluck('name')->toArray();
-            // Filter abilities containing ':' and cut any string after '_'
+
             $abilities = array_map(function ($ability) {
                 return explode('_', $ability)[0];
             }, array_filter($abilities, function ($ability) {
                 return strpos($ability, ':') !== false;
             }));
-            //create token with abilities
+
             $token = $user->createToken('token', $abilities)->plainTextToken;
 
             return new LoginResource([
@@ -36,7 +36,6 @@ class AuthController extends Controller
                 'user' => $user
             ]);
         } else {
-            //jika gagal kirim response error
             return response()->json([
                 'message' => 'Invalid Credentials'
             ], 401);
@@ -64,9 +63,9 @@ class AuthController extends Controller
     //logout
     public function logout(Request $request)
     {
-        //hapus semua tuken by user
-        $request->user()->tokens()->delete();
-        //response no content
-        return response()->noContent();
+        // Hapus hanya token aktif, bukan semua token pengguna
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Logged out successfully'], 200);
     }
 }
