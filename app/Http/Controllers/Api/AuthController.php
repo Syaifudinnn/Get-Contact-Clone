@@ -14,31 +14,27 @@ class AuthController extends Controller
     //login
     public function login(LoginRequest $request)
     {
-        //validate dengan Auth::attempt
         if (Auth::attempt($request->only('email', 'password'))) {
-
             $user = User::where('email', $request->email)->first();
 
+            // Delete existing tokens
             $user->tokens()->delete();
 
+            // Get all permissions and filter valid abilities
             $abilities = $user->getAllPermissions()->pluck('name')->toArray();
+            $validAbilities = array_filter($abilities, function ($ability) {
+                return is_string($ability) && strpos($ability, ':') !== false;
+            });
 
-            $abilities = array_map(function ($ability) {
-                return explode('_', $ability)[0];
-            }, array_filter($abilities, function ($ability) {
-                return strpos($ability, ':') !== false;
-            }));
-
-            $token = $user->createToken('token', $abilities)->plainTextToken;
+            // Create token with valid abilities
+            $token = $user->createToken('token-name', $validAbilities)->plainTextToken;
 
             return new LoginResource([
                 'token' => $token,
                 'user' => $user
             ]);
         } else {
-            return response()->json([
-                'message' => 'Invalid Credentials'
-            ], 401);
+            return response()->json(['message' => 'Invalid Credentials'], 401);
         }
     }
 
