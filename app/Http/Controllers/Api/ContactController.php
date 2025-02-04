@@ -10,7 +10,10 @@ class ContactController extends Controller
 {
     public function index(Request $request)
     {
-        return response()->json(['data' => Contact::all()]);
+        $user = $request->user(); // Mendapatkan user yang sedang login
+        $contacts = Contact::where('user_id', $user->id)->get(); // Hanya kontak milik user
+
+        return response()->json(['data' => $contacts]);
     }
 
     public function search(Request $request)
