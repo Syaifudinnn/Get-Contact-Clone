@@ -12,18 +12,25 @@ class ContactController extends Controller
     {
         return response()->json(['data' => Contact::all()]);
     }
-    
+
     public function search(Request $request)
     {
-        $query = $request->input('query'); // Ambil keyword dari request
+        $query = $request->input('query');
 
         if (!$query) {
             return response()->json(['message' => 'Query is required'], 400);
         }
 
-        $contacts = Contact::where('contact_name', 'like', "%{$query}%")
-                           ->orWhere('contact_phone', 'like', "%{$query}%")
-                           ->get();
+        // Normalisasi query
+        if (str_starts_with($query, '08')) {
+            $query = '+62' . substr($query, 1);
+        }
+
+        $contacts = Contact::where('contact_phone', $query)->get();
+
+        if ($contacts->isEmpty()) {
+            return response()->json(['message' => 'No contacts found'], 404);
+        }
 
         return response()->json($contacts);
     }
